@@ -1,0 +1,36 @@
+ 
+ cd taskmanager/
+ source .venv/bin/activate
+ 
+Phase 1
+
+
+Step 1: Create the Django project
+
+django-admin startproject taskmanager
+cd taskmanager
+
+Step 2: Create the tasks app
+
+python manage.py startapp tasks
+
+Step 3: Register the app in settings.py
+
+In taskmanager/settings.py and add 'tasks', to INSTALLED_APPS:
+
+Phase 2 
+
+->  Open tasks/models.py and creating the task model there 
+
+
+
+Phase 3
+
+->  migrating the model {
+    python manage.py makemigrations
+    python manage.py migrate
+
+}
+
+Phase 4: Authentication – Login & Signup
+ in tasks creating form.py
