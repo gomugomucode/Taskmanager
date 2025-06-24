@@ -1,7 +1,21 @@
 {% extends 'tasks/base.html' %}
 
 {% block content %}
-  <h2>Welcome to Task Manager!</h2>
-  <p>You're logged in as {{ user.username }}</p>
-  <p>Go ahead and create your first task 🚀</p>
+<div class="min-h-screen flex flex-col items-center justify-center  px-4">
+  <div class="max-w-md w-full bg-white p-8 rounded-md border border-gray-200 shadow-sm text-center">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+      Welcome to Task Manager!
+    </h2>
+    <p class="text-gray-700 mb-6">
+      You're logged in as <span class="font-medium text-green-600">{{ user.username }}</span>
+    </p>
+    <p class="text-gray-600 text-lg">
+      Go ahead and create your first task <span class="inline-block">🚀</span>
+    </p>
+    {% comment %} <a href="{% url 'create_task' %}" 
+       class="mt-8 inline-block bg-green-600 text-white py-2 px-6 rounded-md hover:bg-green-700 transition">
+      Create Task
+    </a> {% endcomment %}
+  </div>
+</div>
 {% endblock %}
