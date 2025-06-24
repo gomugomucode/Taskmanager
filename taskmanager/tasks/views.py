@@ -10,7 +10,9 @@ from .forms import TaskForm
 
 @login_required
 def home(request):
-    return render(request, 'tasks/home.html')
+    tasks = Task.objects.filter(user=request.user).order_by('-created_at')[:5]  
+    return render(request, 'tasks/home.html', {'tasks': tasks})
+
 
 def signup(request):
     if request.method == 'POST':
@@ -57,3 +59,10 @@ def task_delete(request, pk):
         return redirect('task_list')
     return render(request, 'tasks/task_confirm_delete.html', {'task': task})
 
+
+@login_required
+def toggle_task(request, pk):
+    task = get_object_or_404(Task, pk=pk, user=request.user)
+    task.completed = not task.completed
+    task.save()
+    return redirect('task_list')

@@ -1,0 +1,37 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto mt-10 px-4">
+  <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Your Tasks</h2>
+
+  <div class="flex justify-end mb-4">
+    <a href="{% url 'task_create' %}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+      + New Task
+    </a>
+  </div>
+
+  {% if tasks %}
+    <ul class="space-y-4">
+      {% for task in tasks %}
+        <li class="p-4 bg-white rounded shadow border border-gray-200">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">{{ task.title }}</h3>
+              {% if task.due_date %}
+                <p class="text-sm text-gray-600">Due: {{ task.due_date }}</p>
+              {% endif %}
+              <p class="text-sm text-gray-500">{{ task.description|truncatechars:100 }}</p>
+            </div>
+            <div class="flex space-x-2">
+              <a href="{% url 'task_update' task.pk %}" class="text-blue-600 hover:underline">Edit</a>
+              <a href="{% url 'task_delete' task.pk %}" class="text-red-600 hover:underline">Delete</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-gray-600 text-center">You have no tasks yet. Let's create one!</p>
+  {% endif %}
+</div>
+{% endblock %}

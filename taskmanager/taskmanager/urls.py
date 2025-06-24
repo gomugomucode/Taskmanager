@@ -37,5 +37,6 @@ urlpatterns = [
     path('tasks/create/', task_views.task_create, name='task_create'),
     path('tasks/<int:pk>/edit/', task_views.task_update, name='task_update'),
     path('tasks/<int:pk>/delete/', task_views.task_delete, name='task_delete'),
+    path('tasks/<int:pk>/toggle/', task_views.toggle_task, name='task_toggle'),
 ]
 
