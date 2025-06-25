@@ -7,12 +7,28 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from .forms import TaskForm
+from django.contrib.auth.models import User
+
+
+@login_required
+def profile(request):
+    tasks = Task.objects.filter(user=request.user)
+    total = tasks.count()
+    completed = tasks.filter(status='completed').count()
+    pending = tasks.filter(status='pending').count()
+
+    return render(request, 'tasks/profile.html', {
+        'user': request.user,
+        'total': total,
+        'completed': completed,
+        'pending': pending,
+        'tasks': tasks[:5]  # show recent 5 tasks
+    })
 
 @login_required
 def home(request):
-    tasks = Task.objects.filter(user=request.user).order_by('-created_at')[:5]  
+    tasks = Task.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'tasks/home.html', {'tasks': tasks})
-
 
 def signup(request):
     if request.method == 'POST':

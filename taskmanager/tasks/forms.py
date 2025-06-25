@@ -45,7 +45,7 @@ class CustomUserCreationForm(UserCreationForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'completed', 'due_date']
+        fields = ['title', 'description', 'due_date', 'status']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'w-full p-2 border rounded', 'placeholder': 'Task title'}),
             'description': forms.Textarea(attrs={'class': 'w-full p-2 border rounded', 'rows': 3, 'placeholder': 'Task description'}),

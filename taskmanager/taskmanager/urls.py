@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
 
-from tasks import views as task_views  # Correct usage
+from tasks import views as task_views  
 
 admin.site.site_header = "TaskForge Admin Panel"
 admin.site.site_title = "TaskForge Admin"
@@ -28,6 +28,7 @@ admin.site.index_title = "Welcome to the TaskForge"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', task_views.home, name='home'), 
+    path('profile/', task_views.profile, name='profile'),
     path('signup/', task_views.signup, name='signup'),
     path('login/', LoginView.as_view(template_name='tasks/login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),  
