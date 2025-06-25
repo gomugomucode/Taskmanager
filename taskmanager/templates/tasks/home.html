@@ -1,63 +1,81 @@
 {% extends 'tasks/base.html' %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-50 py-12 px-4">
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4">
   <div class="max-w-2xl mx-auto">
-    
+
     <!-- Header Section -->
-    <div class="text-center mb-8">
-      <h1 class="text-2xl font-semibold text-gray-900 mb-1">
-        Welcome back, <span class="text-blue-600">{{ user.username }}</span>
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        Hello, <span class="text-green-600">{{ user.username }}</span> 👋
       </h1>
-      <p class="text-gray-500 text-sm">Focus. Create. Complete.</p>
+      <p class="text-gray-600 text-sm">Stay focused. Stay sharp. Your tasks await.</p>
     </div>
 
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center mb-8">
+  <div class="bg-white p-4 rounded shadow border">
+    <h4 class="text-sm text-gray-500 mb-1">Total Tasks</h4>
+    <p class="text-xl font-semibold text-gray-800">{{ tasks.count }}</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow border">
+    <h4 class="text-sm text-gray-500 mb-1">Completed</h4>
+    <p class="text-xl font-semibold text-green-600">{{ tasks|dictsortreversed:"completed"|dictsort:"completed"|length }}</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow border">
+    <h4 class="text-sm text-gray-500 mb-1">Pending</h4>
+    <p class="text-xl font-semibold text-yellow-600">{{ tasks|dictsort:"completed"|length }}</p>
+  </div>
+</div>
+
+
     <!-- Create Task Button -->
-    <div class="mb-8">
+    <div class="mb-10">
       <a href="{% url 'task_create' %}" 
-         class="w-full block bg-gray-600 text-white text-center py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
-        Create New Task
+         class="w-full block bg-green-600 text-white text-center py-3 rounded-lg hover:bg-green-700 transition-all shadow-sm font-medium">
+        + Add New Task
       </a>
     </div>
 
     <!-- Tasks Section -->
     {% if tasks %}
-      <div class="space-y-3">
-        <h2 class="text-lg font-medium text-gray-900 mb-4">Recent Tasks</h2>
-        
-        {% for task in tasks %}
-        <div class="bg-white border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors">
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <h3 class="font-medium text-gray-900 mb-1">{{ task.title }}</h3>
-              {% if task.description %}
-                <p class="text-sm text-gray-600 mb-2">{{ task.description|truncatechars:80 }}</p>
-              {% endif %}
-              {% if task.due_date %}
-                <p class="text-xs text-gray-500">Due {{ task.due_date }}</p>
-              {% endif %}
-            </div>
-            {% if task.completed %}
-              <span class="text-green-600 text-sm font-medium ml-4">✓</span>
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold text-gray-800 mb-2">Your Recent Tasks</h2>
+
+      {% for task in tasks %}
+      <div class="bg-white border border-gray-200 rounded-md p-4 shadow-sm hover:shadow-md transition duration-200">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="text-md font-semibold text-gray-900">{{ task.title }}</h3>
+            {% if task.description %}
+              <p class="text-sm text-gray-600 mt-1">{{ task.description|truncatechars:80 }}</p>
+            {% endif %}
+            {% if task.due_date %}
+              <p class="text-xs text-gray-400 mt-1">Due: {{ task.due_date }}</p>
             {% endif %}
           </div>
-        </div>
-        {% endfor %}
-        
-        <div class="pt-4 text-center">
-          <a href="{% url 'task_list' %}" 
-             class="text-blue-600 text-sm hover:text-blue-700 font-medium">
-            View All Tasks →
-          </a>
+          {% if task.completed %}
+            <span class="ml-3 text-green-500 font-bold text-lg">✓</span>
+          {% endif %}
         </div>
       </div>
+      {% endfor %}
+
+      <div class="pt-4 text-center">
+        <a href="{% url 'task_list' %}" 
+           class="text-blue-600 hover:underline text-sm font-medium">
+          View All Tasks →
+        </a>
+      </div>
+    </div>
+
     {% else %}
-      <div class="text-center py-12">
-        <p class="text-gray-500 mb-4">No tasks yet</p>
-        <p class="text-sm text-gray-400">Create your first task to get started</p>
-      </div>
+    <!-- Empty State -->
+    <div class="bg-white border border-dashed border-gray-300 rounded-lg p-8 text-center shadow-sm">
+      <p class="text-gray-500 text-lg mb-2">You have no tasks yet.</p>
+      <p class="text-sm text-gray-400">Start by creating your first task above.</p>
+    </div>
     {% endif %}
-    
+
   </div>
 </div>
 {% endblock %}

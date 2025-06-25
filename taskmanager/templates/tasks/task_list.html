@@ -1,37 +1,72 @@
 {% extends 'tasks/base.html' %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto mt-10 px-4">
-  <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Your Tasks</h2>
+<div class="min-h-screen  py-12 px-4">
+  <div class="max-w-3xl mx-auto">
 
-  <div class="flex justify-end mb-4">
-    <a href="{% url 'task_create' %}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-      + New Task
-    </a>
-  </div>
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold text-gray-800">📝 Your Tasks</h2>
+      <p class="text-sm text-gray-500 mt-1">Manage your daily goals and stay productive.</p>
+    </div>
 
-  {% if tasks %}
+    <!-- Add Task Button -->
+    <div class="flex justify-end mb-6">
+      <a href="{% url 'task_create' %}"
+         class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 shadow-sm transition">
+        + New Task
+      </a>
+    </div>
+
+    <!-- Task List -->
+    {% if tasks %}
     <ul class="space-y-4">
       {% for task in tasks %}
-        <li class="p-4 bg-white rounded shadow border border-gray-200">
-          <div class="flex justify-between items-center">
-            <div>
-              <h3 class="text-lg font-semibold text-gray-800">{{ task.title }}</h3>
-              {% if task.due_date %}
-                <p class="text-sm text-gray-600">Due: {{ task.due_date }}</p>
-              {% endif %}
-              <p class="text-sm text-gray-500">{{ task.description|truncatechars:100 }}</p>
-            </div>
-            <div class="flex space-x-2">
-              <a href="{% url 'task_update' task.pk %}" class="text-blue-600 hover:underline">Edit</a>
-              <a href="{% url 'task_delete' task.pk %}" class="text-red-600 hover:underline">Delete</a>
-            </div>
+      <li class="bg-white border border-gray-200 rounded-md p-4 shadow-sm hover:shadow-md transition">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900">{{ task.title }}</h3>
+            {% if task.due_date %}
+            <p class="text-sm text-gray-500 mt-1">📅 Due: {{ task.due_date }}</p>
+            {% endif %}
+            {% if task.description %}
+            <p class="text-sm text-gray-600 mt-1">{{ task.description|truncatechars:100 }}</p>
+            {% endif %}
           </div>
-        </li>
+
+          <!-- Action Buttons -->
+          <div class="flex space-x-3 pt-1">
+            <a href="{% url 'task_update' task.pk %}" title="Edit"
+               class="text-blue-600 hover:text-blue-800 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+            </a>
+
+            <a href="{% url 'task_delete' task.pk %}" title="Delete"
+               class="text-red-600 hover:text-red-800 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </li>
       {% endfor %}
     </ul>
-  {% else %}
-    <p class="text-gray-600 text-center">You have no tasks yet. Let's create one!</p>
-  {% endif %}
+
+    {% else %}
+    <!-- No Tasks -->
+    <div class="text-center text-gray-500 mt-12">
+      <p class="text-lg">🚫 No tasks yet!</p>
+      <p class="text-sm">Let’s start by creating one.</p>
+    </div>
+    {% endif %}
+
+  </div>
 </div>
 {% endblock %}
