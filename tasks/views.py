@@ -42,11 +42,17 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'tasks/signup.html', {'form': form})
 
-
 @login_required
 def task_list(request):
-    tasks = Task.objects.filter(user=request.user).order_by('due_date', '-created_at')
-    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+    pending_tasks = Task.objects.filter(user=request.user, status='pending').order_by('due_date')
+    progress_tasks = Task.objects.filter(user=request.user, status='progress').order_by('due_date')
+    completed_tasks = Task.objects.filter(user=request.user, status='completed').order_by('-created_at')
+
+    return render(request, 'tasks/task_list.html', {
+        'pending_tasks': pending_tasks,
+        'progress_tasks': progress_tasks,
+        'completed_tasks': completed_tasks
+    })
 
 @login_required
 def task_create(request):
