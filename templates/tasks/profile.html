@@ -2,7 +2,20 @@
 
 {% block content %}
 <div class="max-w-2xl mx-auto py-10 px-4">
+  
   <div class="bg-white p-6 rounded shadow border mb-8 text-center">
+    <!-- Profile Icon -->
+<div class="flex justify-center mb-3">
+  <div class="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center shadow-inner">
+    <!-- Heroicon: User -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24"
+         stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M5.121 17.804A8.966 8.966 0 0012 20a8.966 8.966 0 006.879-2.196M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  </div>
+</div>
+
     <h2 class="text-2xl font-bold text-gray-800 mb-1">Hello, {{ user.username }}</h2>
     <p class="text-gray-500 text-sm mb-2">{{ user.email }}</p>
     <p class="text-gray-400 text-xs">Member since: {{ user.date_joined|date:"F j, Y" }}</p>

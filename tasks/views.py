@@ -22,7 +22,7 @@ def profile(request):
         'total': total,
         'completed': completed,
         'pending': pending,
-        'tasks': tasks[:5]  # show recent 5 tasks
+        'tasks': tasks
     })
 
 @login_required
@@ -82,9 +82,9 @@ def task_delete(request, pk):
     return render(request, 'tasks/task_confirm_delete.html', {'task': task})
 
 
+
 @login_required
-def toggle_task(request, pk):
+def toggle_status(request, pk):
     task = get_object_or_404(Task, pk=pk, user=request.user)
-    task.completed = not task.completed
-    task.save()
+    task.cycle_status()
     return redirect('task_list')
